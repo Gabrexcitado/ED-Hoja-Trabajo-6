@@ -37,6 +37,33 @@ public class Pokemon implements Comparable<Pokemon>{
         return abilities;
     }
 
+    public String toString(){
+        String legendaryMessage;
+        String type2Message;
+
+        if(isLegendary == "Yes"){
+            legendaryMessage = "Este pokemon es legendario"; 
+        }else{
+            legendaryMessage = "Este pokemon no es legendario";
+        }
+
+        if(type2 != ""){
+            type2Message = type2;
+        }else{
+            type2Message = "No cuenta con tipo secundario";
+        }
+    
+        return "\nNombre: " + name.toUpperCase() +
+        "\nNo. en Pokedex: " + number + 
+        "\nTipo Primario: " + type1 + 
+        "\nTipo Secundario: " + type2Message +
+        "\nClasificacion: " + classification + 
+        "\nAltura: " + height + " metros" + 
+        "\nPeso: " + weight + " kilogramos"+ 
+        "\nHabilidades: " + abilities + 
+        "\nGeneracion: " + generation +
+        "\n"+legendaryMessage + "\n";
+    }
     /**
      * Implementacion CompareTo para la pokedex del usuario
      * @param thatPokemon pokemon a comparar

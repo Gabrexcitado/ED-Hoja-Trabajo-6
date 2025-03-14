@@ -13,14 +13,13 @@ public class Converter {
      * @return mapa con todos los pokemon
      */
     public static Map<String,Pokemon> pokedexToMap(String option){
-        Map <String,Pokemon> map = Factory.mapFactory(option); 
-        ArrayList<Pokemon> listToSort = new ArrayList<>();
+        Map <String,Pokemon> map = Factory.mapFactory(option);
 
         try(BufferedReader br = new BufferedReader(new FileReader("pokedex.csv"))){
             br.readLine(); //Saltar encabezado
             String line; 
             while((line = br.readLine()) != null){
-                String []  data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                String []  data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
                                             //expresion para que no se separen las comas dentro de las comillas
 
                 try {
@@ -36,26 +35,20 @@ public class Converter {
                     String[] listedAbilities =  data[7].split(",;");
                     ArrayList<String> abilities = new ArrayList<>();
                     for (String ability:listedAbilities){
-                        abilities.add(ability.trim());
+                        abilities.add(ability.trim().toLowerCase());
                     }
 
                     int generation = Integer.parseInt(data[8].trim());
                     String isLegendary = data[9].trim();
 
                     Pokemon pokemon = new Pokemon(name, number, type1, type2, classification, height, weight, abilities, generation, isLegendary);
-                    listToSort.add(pokemon);
+                    map.put(name, pokemon);
 
                 }catch (Exception e){
                 System.out.println("Error procesando línea: " + line);
                 e.printStackTrace(); 
                 }
-            }
-            //Ordenar la lista por tipo para luego agregarla al mapa
-            listToSort.sort((pokemon1, pokemon2) -> pokemon1.getType1().compareTo(pokemon2.getType1()));   
-
-            for (Pokemon pokemon :listToSort){
-                map.put(pokemon.getName(), pokemon);
-            }             
+            }   
 
         }catch(Exception e){
         System.out.println("No se logró leer el archivo");
