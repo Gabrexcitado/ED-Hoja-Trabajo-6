@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Pokemon {
+public class Pokemon implements Comparable<Pokemon>{
     
     private String name;
     private int number;
@@ -24,5 +24,26 @@ public class Pokemon {
         this.abilities= abilities;
         this.generation = generation;
         this.isLegendary = isLegendary;
+    }
+    public String getName(){
+        return name;
+    }
+
+    public String getType1(){
+        return type1;
+    }
+
+    public ArrayList<String> getAbilities(){
+        return abilities;
+    }
+
+    /**
+     * Implementacion CompareTo para la pokedex del usuario
+     * @param thatPokemon pokemon a comparar
+     * @return orden por comparacion entre type1
+     */
+    @Override
+    public int compareTo(Pokemon thatPokemon){
+        return this.type1.compareTo(thatPokemon.type1);
     }
 }
